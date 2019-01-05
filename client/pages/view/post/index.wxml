@@ -1,0 +1,24 @@
+<import src="./post-item/post-item-template.wxml" />
+
+<view>
+    <!-- swiper轮播图 -->
+    <swiper interval='{{3000}}' duration='{{1000}}' indicator-dots='{{true}}' autoplay="true" circular="true">
+        <swiper-item>
+            <image src='/img/iqiyi.png' catchtap="onPostTap" data-postId="5"></image>
+        </swiper-item>
+        <swiper-item>
+            <image src='/img/vr.png' catchtap="onPostTap" data-postId="6"></image>
+        </swiper-item>
+        <swiper-item>
+            <image src='/img/wx.png' catchtap="onPostTap" data-postId="7"></image>
+        </swiper-item>
+    </swiper>
+
+    <!-- 文章列表 -->
+    <!-- 循环数据 -->
+    <block wx:for="{{post_content}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
+    <view catchtap="onPostTap" data-postId="{{ item.postId }}">
+        <template is="postItem" data="{{ ...item }}"/>
+    </view>
+    </block>
+</view>

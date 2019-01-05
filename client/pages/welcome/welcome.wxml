@@ -1,0 +1,7 @@
+<view class='box'>
+    <image class='user-avatar' src='/img/avatar/4.png'></image>
+    <text>hello, him</text>
+    <view class='user-btn' bindtap='onTap'>
+        <text>开启小程序之旅</text>
+    </view>
+</view>

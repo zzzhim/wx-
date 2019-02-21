@@ -1,5 +1,5 @@
 var doubanBase = getApp().globalData.doubanBase
-var { convertToStarsArray } = require('../../utils/util.js')
+var { convertToStarsArray, http } = require('../../utils/util.js')
 
 Page({
 
@@ -7,6 +7,26 @@ Page({
      * 页面的初始数据
      */
     data: {
+        containerShow: true,
+        searchPanelShow: false,
+        searchResult: {}
+    },
+    // 跳转更多页面
+    onMoreTap(event) {
+        var category = event.currentTarget.dataset.category
+
+        wx.navigateTo({
+            url: 'more-movie/more-movie?category=' + category,
+        })
+    },
+
+    // 跳转电影详情页面
+    onMovieTap(event) {
+        var movieId = event.currentTarget.dataset.movieid
+
+        wx.navigateTo({
+            url: 'movie-detail/movie-detail?id=' + movieId,
+        })
     },
 
     getMovieListData(url, key, categoryTitle){
@@ -22,6 +42,30 @@ Page({
             }
         })
     },
+
+    onBindFocus(event) {
+        this.setData({
+            containerShow: false,
+            searchPanelShow: true
+        })
+    },
+
+    onCancelImgTap() {
+        this.setData({
+            containerShow: true,
+            searchPanelShow: false,
+            searchResult: {}
+        })
+    },
+
+    onBindBlur(event) {
+        var text = event.detail.value
+        var searchUrl = doubanBase + `/v2/movie/search?q=${ text }`
+
+
+        this.getMovieListData(searchUrl, "searchResult", "")
+    },
+
 
     // 处理从豆瓣取出来的数据
     processDoubanData(moviesDouban, key, categoryTitle) {
